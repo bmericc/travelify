@@ -286,6 +286,12 @@ function travelify_theloop_for_single() {
 
 				<?php do_action( 'travelify_before_post_content' ); ?>
 
+				<?php if ( has_post_thumbnail() ) : ?>
+				<figure class="post-featured-image post-featured-image--single">
+					<?php the_post_thumbnail( 'full', array( 'alt' => esc_attr( get_the_title() ) ) ); ?>
+				</figure>
+				<?php endif; ?>
+
   			<div class="entry-content clearfix">
     			<?php the_content();
     			if( is_single() ) {
