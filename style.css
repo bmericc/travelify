@@ -554,7 +554,8 @@ a.more-link:focus {
 }
 #site-title a img {
 	vertical-align: inherit;
-	max-width: 978px;
+	max-width: 300px;
+	height: auto;
 }
 #site-title a span,
 #site-title a:hover,
