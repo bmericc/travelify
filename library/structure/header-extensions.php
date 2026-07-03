@@ -84,7 +84,16 @@ function travelify_headerdetails() {
 					</section><!-- .hgroup-right -->
 				<hgroup id="site-logo" class="clearfix">
 					<?php
-						if( $options[ 'header_show' ] != 'disable-both' && $options[ 'header_show' ] == 'header-text' ) {
+						$custom_logo_id = get_theme_mod( 'custom_logo' );
+						if ( $custom_logo_id ) {
+							?>
+							<h1 id="site-title">
+								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+									<?php echo wp_get_attachment_image( $custom_logo_id, 'full', false, array( 'alt' => esc_attr( get_bloginfo( 'name', 'display' ) ) ) ); ?>
+								</a>
+							</h1>
+							<?php
+						} elseif( $options[ 'header_show' ] != 'disable-both' && $options[ 'header_show' ] == 'header-text' ) {
 						?>
 							<h1 id="site-title">
 								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
@@ -93,8 +102,7 @@ function travelify_headerdetails() {
 							</h1>
 							<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 						<?php
-						}
-						elseif( $options[ 'header_show' ] != 'disable-both' && $options[ 'header_show' ] == 'header-logo' ) {
+						} elseif( $options[ 'header_show' ] != 'disable-both' && $options[ 'header_show' ] == 'header-logo' ) {
 						?>
 							<h1 id="site-title">
 								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">

@@ -75,6 +75,14 @@ if ( ! function_exists( 'travelify_setup' ) ):
 		// This theme uses Featured Images (also known as post thumbnails) for per-post/per-page.
 		add_theme_support( 'post-thumbnails' );
 
+		// WordPress core logo upload (Appearance > Customize > Site Identity)
+		add_theme_support( 'custom-logo', array(
+			'height'      => 100,
+			'width'       => 400,
+			'flex-height' => true,
+			'flex-width'  => true,
+		) );
+
 		// This theme uses wp_nav_menu() in header menu location.
 		register_nav_menu( 'primary', __( 'Primary Menu', 'travelify' ) );
 
