@@ -46,6 +46,14 @@ function travelify_headerdetails() {
 		global $travelify_theme_options_settings;
    	$options = $travelify_theme_options_settings;
 
+   	/**
+   	 * SEO: Site başlığı sadece anasayfada H1 olmalı. Diğer tüm sayfalarda
+   	 * (tekli yazı/sayfa/arşiv) asıl H1, o sayfanın kendi başlığı olmalı
+   	 * (bkz. travelify_theloop_for_single() / travelify_theloop_for_page()).
+   	 * Aksi halde her sayfada aynı (mükerrer) H1 metni çıkıyordu.
+   	 */
+   	$site_title_tag = is_front_page() ? 'h1' : 'p';
+
    	$elements = array();
 		$elements = array(
 			$options[ 'social_facebook' ],
@@ -87,28 +95,28 @@ function travelify_headerdetails() {
 						$custom_logo_id = get_theme_mod( 'custom_logo' );
 						if ( $custom_logo_id ) {
 							?>
-							<h1 id="site-title">
+							<<?php echo $site_title_tag; ?> id="site-title">
 								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 									<?php echo wp_get_attachment_image( $custom_logo_id, 'full', false, array( 'alt' => esc_attr( get_bloginfo( 'name', 'display' ) ) ) ); ?>
 								</a>
-							</h1>
+							</<?php echo $site_title_tag; ?>>
 							<?php
 						} elseif( $options[ 'header_show' ] != 'disable-both' && $options[ 'header_show' ] == 'header-text' ) {
 						?>
-							<h1 id="site-title">
+							<<?php echo $site_title_tag; ?> id="site-title">
 								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
 									<?php bloginfo( 'name' ); ?>
 								</a>
-							</h1>
+							</<?php echo $site_title_tag; ?>>
 							<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
 						<?php
 						} elseif( $options[ 'header_show' ] != 'disable-both' && $options[ 'header_show' ] == 'header-logo' ) {
 						?>
-							<h1 id="site-title">
+							<<?php echo $site_title_tag; ?> id="site-title">
 								<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
 									<img src="<?php echo $options[ 'header_logo' ]; ?>" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
 								</a>
-							</h1>
+							</<?php echo $site_title_tag; ?>>
 						<?php
 						}
 						?>

@@ -190,9 +190,9 @@ function travelify_theloop_for_page() {
 			<?php do_action( 'travelify_before_post_header' ); ?>
 
 			<header class="entry-header">
-    			<h2 class="entry-title">
+    			<h1 class="entry-title">
     				<?php the_title(); ?>
-    			</h2><!-- .entry-title -->
+    			</h1><!-- .entry-title -->
   			</header>
 
   			<?php do_action( 'travelify_after_post_header' ); ?>
@@ -261,9 +261,9 @@ function travelify_theloop_for_single() {
 			<?php do_action( 'travelify_before_post_header' ); ?>
 
 			<header class="entry-header">
-    			<h2 class="entry-title">
+    			<h1 class="entry-title">
     				<?php the_title(); ?>
-    			</h2><!-- .entry-title -->
+    			</h1><!-- .entry-title -->
   		</header>
 
   		<?php do_action( 'travelify_after_post_header' ); ?>
