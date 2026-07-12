@@ -11,6 +11,7 @@ global $travelify_theme_options_defaults;
 $travelify_theme_options_defaults = array(
 	'disable_slider'       => 0,
 	'exclude_slider_post'  => 0,
+	'auto_slider_posts'    => 0,
 	'default_layout'       => 'right-sidebar',
 	'reset_layout'         => 0,
 	'custom_css'           => '',

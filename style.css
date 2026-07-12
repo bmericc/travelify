@@ -914,6 +914,49 @@ a.more-link:focus {
 	color: #222222 !important;
 }
 
+/* Sağ/sol geçiş okları (next/prev) - jQuery Cycle'ın 'next'/'prev' seçenekleriyle bağlanır */
+.featured-slider .slider-nav {
+	position: absolute;
+	top: 50%;
+	margin-top: -20px;
+	width: 40px;
+	height: 40px;
+	line-height: 38px;
+	text-align: center;
+	background: rgba(0, 0, 0, 0.4);
+	color: #fff;
+	font-size: 20px;
+	text-decoration: none;
+	z-index: 9999;
+	border-radius: 2px;
+	opacity: 0;
+	transition: opacity .2s ease, background-color .2s ease;
+}
+.featured-slider:hover .slider-nav {
+	opacity: 1;
+}
+.featured-slider .slider-nav:hover,
+.featured-slider .slider-nav:focus {
+	background: rgba(0, 0, 0, 0.75);
+	color: #fff;
+}
+.featured-slider .slider-prev {
+	left: 10px;
+}
+.featured-slider .slider-next {
+	right: 10px;
+}
+@media (max-width: 768px) {
+	.featured-slider .slider-nav {
+		opacity: 1;
+		width: 32px;
+		height: 32px;
+		line-height: 30px;
+		font-size: 16px;
+		margin-top: -16px;
+	}
+}
+
 /* =Content
 -----------------------------------------------*/
 #main {

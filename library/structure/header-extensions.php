@@ -248,17 +248,31 @@ function travelify_featured_post_slider() {
   	$options = $travelify_theme_options_settings;
 
   $travelify_featured_post_slider = '';
-	if (!empty( $options[ 'featured_post_slider' ] ) ) {
+	$auto_slider_posts = !empty( $options[ 'auto_slider_posts' ] );
+	if ( $auto_slider_posts || !empty( $options[ 'featured_post_slider' ] ) ) {
 		$travelify_featured_post_slider .= '
 		<section class="featured-slider"><div class="slider-cycle">';
-			$get_featured_posts = new WP_Query( array(
-				'posts_per_page' 		    => $options[ 'slider_quantity' ],
-				'post_type'					    => array( 'post', 'page' ),
-				'post__in'		 			    => $options[ 'featured_post_slider' ],
-				'orderby' 		 			    => 'post__in',
-				'suppress_filters' 	    => false,
-				'ignore_sticky_posts' 	=> 1 						// ignore sticky posts
-			));
+			if ( $auto_slider_posts ) {
+				// Otomatik mod: elle seçilen post ID listesi yerine en son N yazı (tarihe göre) çekilir.
+				$slider_query_args = array(
+					'posts_per_page'      => ! empty( $options[ 'slider_quantity' ] ) ? intval( $options[ 'slider_quantity' ] ) : 4,
+					'post_type'            => array( 'post' ),
+					'orderby'              => 'date',
+					'order'                => 'DESC',
+					'suppress_filters'     => false,
+					'ignore_sticky_posts'  => 1,
+				);
+			} else {
+				$slider_query_args = array(
+					'posts_per_page' 		    => $options[ 'slider_quantity' ],
+					'post_type'					    => array( 'post', 'page' ),
+					'post__in'		 			    => $options[ 'featured_post_slider' ],
+					'orderby' 		 			    => 'post__in',
+					'suppress_filters' 	    => false,
+					'ignore_sticky_posts' 	=> 1 						// ignore sticky posts
+				);
+			}
+			$get_featured_posts = new WP_Query( $slider_query_args );
 			$i=0; while ( $get_featured_posts->have_posts()) : $get_featured_posts->the_post(); $i++;
 				$title_attribute = apply_filters( 'the_title', get_the_title( $post->ID ) );
 				$excerpt = get_the_excerpt();
@@ -288,7 +302,11 @@ function travelify_featured_post_slider() {
 			endwhile; wp_reset_postdata();
 		$travelify_featured_post_slider .= '</div>
 		<nav id="controllers" class="clearfix">
-		</nav><!-- #controllers --></section><!-- .featured-slider -->';
+		</nav><!-- #controllers -->';
+		if ( $i > 1 ) {
+			$travelify_featured_post_slider .= '<a href="#" class="slider-nav slider-prev" id="slider-prev" aria-label="' . esc_attr__( 'Previous', 'travelify' ) . '">&#10094;</a><a href="#" class="slider-nav slider-next" id="slider-next" aria-label="' . esc_attr__( 'Next', 'travelify' ) . '">&#10095;</a>';
+		}
+		$travelify_featured_post_slider .= '</section><!-- .featured-slider -->';
 	}
 	echo $travelify_featured_post_slider;
 }

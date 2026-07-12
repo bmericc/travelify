@@ -358,6 +358,19 @@ function travelify_options_register_theme_customizer($wp_customize)
             'settings' => 'travelify_theme_options[exclude_slider_post]'
         ));
 
+        $wp_customize->add_setting('travelify_theme_options[auto_slider_posts]', array(
+            'default' => 0,
+            'type' => 'option',
+            'capability' => 'edit_theme_options',
+            'sanitize_callback' => 'travelify_sanitize_checkbox'
+        ));
+        $wp_customize->add_control('travelify_theme_options[auto_slider_posts]', array(
+            'label' => esc_html__('Automatically show latest posts (ignores manual slide selection below)', 'travelify'),
+            'section' => 'travelify_post_slider_options',
+            'type' => 'checkbox',
+            'settings' => 'travelify_theme_options[auto_slider_posts]'
+        ));
+
         $wp_customize->add_setting( 'travelify_theme_options[featured_post_slider]', array(
             'default' => $travelify_theme_options_defaults['featured_post_slider'],
             'type'    => 'option',
