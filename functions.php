@@ -154,11 +154,13 @@ if ( ! function_exists( 'travelify_setup' ) ):
 endif; // travelify_setup
 
 /**
- * Open Graph / Twitter Card görsel etiketleri.
- * Not (2026-07-12): Yoast SEO bu sitelerde og:title / og:description / og:url
- * ve twitter:card / twitter:label / twitter:data etiketlerini üretiyor, ama
- * görsel etiketini (og:image / twitter:image) üretmiyor — bu eksik burada
- * tamamlanıyor (öne çıkan görsel üzerinden).
+ * Twitter Card görsel etiketi.
+ * Not (2026-07-12): Yoast SEO bu sitelerde og:title / og:description / og:url /
+ * og:image ve twitter:card / twitter:label / twitter:data etiketlerini kendisi
+ * üretiyor — sadece twitter:image'ı üretmiyor (Twitter Card özel görseli),
+ * bu eksik burada tamamlanıyor (öne çıkan görsel üzerinden).
+ * (Önceden og:image de burada basılıyordu, ama Yoast bunu zaten kendisi
+ * ürettiği için sayfada mükerrer og:image etiketine yol açıyordu — kaldırıldı.)
  */
 add_action( 'wp_head', 'travelify_social_image_meta', 5 );
 function travelify_social_image_meta() {
@@ -173,9 +175,6 @@ function travelify_social_image_meta() {
 
 	list( $url, $width, $height ) = $image;
 
-	printf( '<meta property="og:image" content="%s" />' . "\n", esc_url( $url ) );
-	printf( '<meta property="og:image:width" content="%d" />' . "\n", (int) $width );
-	printf( '<meta property="og:image:height" content="%d" />' . "\n", (int) $height );
 	printf( '<meta name="twitter:image" content="%s" />' . "\n", esc_url( $url ) );
 	printf( '<meta name="twitter:image:width" content="%d" />' . "\n", (int) $width );
 	printf( '<meta name="twitter:image:height" content="%d" />' . "\n", (int) $height );
