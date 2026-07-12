@@ -850,6 +850,26 @@ a.more-link:focus {
 .featured-slider .displaynone {
 	display: none;
 }
+/* Slayt görsellerini sabit orana (travelify-slider: 1018x460 ~ 2.213:1) göre standardize et.
+   Kayıtlı boyuttan farklı (ör. eski/yeniden üretilmemiş) bir görsel gelse bile
+   object-fit:cover ile hepsi aynı yükseklikte, kırpılarak gösterilir; slaytlar arası
+   uyumsuz yükseklik sıçraması engellenir. */
+.featured-slider .slides figure {
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1018 / 460;
+}
+.featured-slider .slides figure img {
+	width: 100%;
+	height: 100%;
+	-o-object-fit: cover;
+	object-fit: cover;
+	-o-object-position: center;
+	object-position: center;
+	display: block;
+}
 .featured-text {
 	position: absolute;
 	bottom: 55px;

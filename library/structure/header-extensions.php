@@ -283,7 +283,7 @@ function travelify_featured_post_slider() {
 
 							$travelify_featured_post_slider .= '<figure><a href="' . esc_url( get_permalink() ) . '" title="'.the_title('','',false).'">';
 
-							$travelify_featured_post_slider .= get_the_post_thumbnail( $post->ID, 'slider', array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ), 'class'	=> 'pngfix' ) ).'</a></figure>';
+							$travelify_featured_post_slider .= get_the_post_thumbnail( $post->ID, 'travelify-slider', array( 'title' => esc_attr( $title_attribute ), 'alt' => esc_attr( $title_attribute ), 'class'	=> 'pngfix' ) ).'</a></figure>';
 						}
 						if( $title_attribute != '' || $excerpt !='' ) {
 						$travelify_featured_post_slider .= '

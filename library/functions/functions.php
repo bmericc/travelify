@@ -48,7 +48,11 @@ function travelify_scripts_styles_method() {
 	 * Enqueue Fancy Box setup js and css file.
 	 */
 	if( ( is_home() || is_front_page() ) && "0" == $options[ 'disable_slider' ] ) {
-		wp_enqueue_script( 'travelify_slider', get_template_directory_uri() . '/library/js/slider-settings.min.js', array( 'jquery_cycle' ), false, true );
+		// filemtime tabanlı sürüm: dosya her değiştiğinde URL'de ?ver= değeri değişir,
+		// böylece Cloudflare/tarayıcı edge cache'i (max-age çok uzun) her deploy'da otomatik bypass edilir.
+		$travelify_slider_js_path = get_template_directory() . '/library/js/slider-settings.min.js';
+		$travelify_slider_js_ver  = file_exists( $travelify_slider_js_path ) ? filemtime( $travelify_slider_js_path ) : '2.9999.5';
+		wp_enqueue_script( 'travelify_slider', get_template_directory_uri() . '/library/js/slider-settings.min.js', array( 'jquery_cycle' ), $travelify_slider_js_ver, true );
 	}
 
 	wp_enqueue_script( 'travelify_functions', get_template_directory_uri() . '/library/js/functions.min.js', array( 'jquery' ) );
