@@ -253,12 +253,12 @@ function travelify_featured_post_slider() {
 		$travelify_featured_post_slider .= '
 		<section class="featured-slider"><div class="slider-cycle">';
 			if ( $auto_slider_posts ) {
-				// Otomatik mod: elle seçilen post ID listesi yerine en son N yazı (tarihe göre) çekilir.
+				// Otomatik mod: son N yazıyı çek, eskiden yeniye sırala (en son yazı sayfada zaten görünüyor)
 				$slider_query_args = array(
 					'posts_per_page'      => ! empty( $options[ 'slider_quantity' ] ) ? intval( $options[ 'slider_quantity' ] ) : 4,
 					'post_type'            => array( 'post' ),
 					'orderby'              => 'date',
-					'order'                => 'ASC',
+					'order'                => 'DESC',
 					'suppress_filters'     => false,
 					'ignore_sticky_posts'  => 1,
 				);
@@ -273,6 +273,11 @@ function travelify_featured_post_slider() {
 				);
 			}
 			$get_featured_posts = new WP_Query( $slider_query_args );
+			// Otomatik modda: son N yazıyı çektik, şimdi eskiden yeniye çevir
+			if ( $auto_slider_posts && $get_featured_posts->have_posts() ) {
+				$get_featured_posts->posts = array_reverse( $get_featured_posts->posts );
+				$get_featured_posts->rewind_posts();
+			}
 			$i=0; while ( $get_featured_posts->have_posts()) : $get_featured_posts->the_post(); $i++;
 				$title_attribute = apply_filters( 'the_title', get_the_title( $post->ID ) );
 				$excerpt = get_the_excerpt();
