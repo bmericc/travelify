@@ -253,14 +253,15 @@ function travelify_featured_post_slider() {
 		$travelify_featured_post_slider .= '
 		<section class="featured-slider"><div class="slider-cycle">';
 			if ( $auto_slider_posts ) {
-				// Otomatik mod: son N yazıyı çek, eskiden yeniye sırala (en son yazı sayfada zaten görünüyor)
+				// Otomatik mod: öne çıkarılan resmi olan son 5 yazıyı çek, eskiden yeniye sırala
 				$slider_query_args = array(
-					'posts_per_page'      => ! empty( $options[ 'slider_quantity' ] ) ? intval( $options[ 'slider_quantity' ] ) : 4,
-					'post_type'            => array( 'post' ),
-					'orderby'              => 'date',
-					'order'                => 'DESC',
-					'suppress_filters'     => false,
-					'ignore_sticky_posts'  => 1,
+					'posts_per_page'      => 5,
+					'post_type'           => array( 'post' ),
+					'orderby'             => 'date',
+					'order'               => 'DESC',
+					'meta_key'            => '_thumbnail_id',
+					'suppress_filters'    => false,
+					'ignore_sticky_posts' => 1,
 				);
 			} else {
 				$slider_query_args = array(
