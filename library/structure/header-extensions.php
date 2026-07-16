@@ -258,7 +258,7 @@ function travelify_featured_post_slider() {
 					'posts_per_page'      => ! empty( $options[ 'slider_quantity' ] ) ? intval( $options[ 'slider_quantity' ] ) : 4,
 					'post_type'            => array( 'post' ),
 					'orderby'              => 'date',
-					'order'                => 'DESC',
+					'order'                => 'ASC',
 					'suppress_filters'     => false,
 					'ignore_sticky_posts'  => 1,
 				);
