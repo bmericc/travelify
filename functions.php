@@ -100,7 +100,7 @@ if ( ! function_exists( 'travelify_setup' ) ):
 		 */
 		$args = array(
 			'default-color' => '#d3d3d3',
-			'default-image' => get_template_directory_uri() . '/images/background.png',
+			'default-image' => get_template_directory_uri() . '/images/background.webp',
 		);
 		add_theme_support( 'custom-background', $args );
 
