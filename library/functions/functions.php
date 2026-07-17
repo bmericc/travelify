@@ -59,14 +59,28 @@ function travelify_scripts_styles_method() {
 
 	wp_enqueue_style( 'travelify_google_font_ubuntu' );
 
-   /**
-    * Browser specific queuing i.e
-    */
-	// Modern approach: Only load HTML5 shim for older browsers that might need it
-	// This replaces the outdated IE-specific check with a more reliable feature detection
 	wp_enqueue_script('html5', get_template_directory_uri() . '/library/js/html5.min.js', array(), null, true, array('strategy' => 'defer'));
 
 }
+
+// JS defer: jquery + tema scriptleri render-blocking azaltma
+add_action( 'wp_enqueue_scripts', function() {
+	foreach ( [ 'jquery-core', 'jquery-migrate', 'jquery',
+	             'travelify_functions', 'jquery_cycle', 'travelify_slider' ] as $handle ) {
+		wp_script_add_data( $handle, 'strategy', 'defer' );
+	}
+}, 99 );
+
+// Google Fonts render-blocking kaldırma: preload + async swap
+add_filter( 'style_loader_tag', function( $tag, $handle ) {
+	if ( $handle === 'travelify_google_font_ubuntu' ) {
+		$href = "//fonts.googleapis.com/css?family=Ubuntu&display=swap";
+		return '<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />' .
+		       '<link rel="preload" href="' . $href . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" />' .
+		       '<noscript><link rel="stylesheet" href="' . $href . '" /></noscript>';
+	}
+	return $tag;
+}, 10, 2 );
 
 /****************************************************************************************/
 
