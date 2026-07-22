@@ -154,13 +154,50 @@ if ( ! function_exists( 'travelify_setup' ) ):
 endif; // travelify_setup
 
 /**
- * Twitter Card görsel etiketi.
+ * X/LinkedIn AVIF sorunu: botlar AVIF formatını desteklemiyor.
+ * Bu helper AVIF URL'ini orijinal JPEG/PNG URL'e çevirir.
+ * wp_get_original_image_url() yüklenen orijinal dosyayı döner (format dönüşümü öncesi).
+ */
+function travelify_social_image_url( int $attachment_id ): ?string {
+	$orig = wp_get_original_image_url( $attachment_id );
+	if ( $orig && ! preg_match( '/\.avif$/i', $orig ) ) {
+		return $orig;
+	}
+
+	// Orijinal de AVIF ise (nadir) — metadata'dan JPEG/PNG boyutuna düş
+	$meta = wp_get_attachment_metadata( $attachment_id );
+	if ( ! empty( $meta['sizes'] ) ) {
+		$upload_dir = wp_upload_dir();
+		$base       = trailingslashit( $upload_dir['baseurl'] ) . dirname( $meta['file'] ?? '' ) . '/';
+		foreach ( $meta['sizes'] as $size ) {
+			if ( isset( $size['file'] ) && ! preg_match( '/\.avif$/i', $size['file'] ) ) {
+				return $base . $size['file'];
+			}
+		}
+	}
+
+	// Son çare: mevcut URL'i dön (AVIF olsa bile)
+	$src = wp_get_attachment_image_src( $attachment_id, 'full' );
+	return $src ? $src[0] : null;
+}
+
+// Yoast'un og:image URL'ini AVIF'ten koru
+add_filter( 'wpseo_opengraph_image_url', function( $url ) {
+	if ( preg_match( '/\.avif$/i', $url ) ) {
+		$id = attachment_url_to_postid( $url );
+		if ( $id ) {
+			$url = travelify_social_image_url( $id ) ?? $url;
+		}
+	}
+	return $url;
+} );
+
+/**
+ * Twitter Card görsel etiketi — AVIF yerine orijinal JPEG/PNG kullanır.
  * Not (2026-07-12): Yoast SEO bu sitelerde og:title / og:description / og:url /
  * og:image ve twitter:card / twitter:label / twitter:data etiketlerini kendisi
  * üretiyor — sadece twitter:image'ı üretmiyor (Twitter Card özel görseli),
  * bu eksik burada tamamlanıyor (öne çıkan görsel üzerinden).
- * (Önceden og:image de burada basılıyordu, ama Yoast bunu zaten kendisi
- * ürettiği için sayfada mükerrer og:image etiketine yol açıyordu — kaldırıldı.)
  */
 add_action( 'wp_head', 'travelify_social_image_meta', 5 );
 function travelify_social_image_meta() {
@@ -168,16 +205,18 @@ function travelify_social_image_meta() {
 		return;
 	}
 
-	$image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-	if ( ! $image ) {
+	$thumb_id = get_post_thumbnail_id();
+	$url      = travelify_social_image_url( $thumb_id );
+	if ( ! $url ) {
 		return;
 	}
 
-	list( $url, $width, $height ) = $image;
+	$image = wp_get_attachment_image_src( $thumb_id, 'full' );
+	[ , $width, $height ] = $image ?: [ null, 0, 0 ];
 
 	printf( '<meta name="twitter:image" content="%s" />' . "\n", esc_url( $url ) );
-	printf( '<meta name="twitter:image:width" content="%d" />' . "\n", (int) $width );
-	printf( '<meta name="twitter:image:height" content="%d" />' . "\n", (int) $height );
+	if ( $width )  printf( '<meta name="twitter:image:width" content="%d" />' . "\n", (int) $width );
+	if ( $height ) printf( '<meta name="twitter:image:height" content="%d" />' . "\n", (int) $height );
 }
 
 /**
