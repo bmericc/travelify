@@ -202,7 +202,7 @@ add_filter( 'wpseo_opengraph_image_url', function( $url ) {
  * üretiyor — sadece twitter:image'ı üretmiyor (Twitter Card özel görseli),
  * bu eksik burada tamamlanıyor (öne çıkan görsel üzerinden).
  */
-add_action( 'wp_head', 'travelify_social_image_meta', 5 );
+add_action( 'wp_head', 'travelify_social_image_meta', 99 );
 function travelify_social_image_meta() {
 	if ( ! is_singular() || ! has_post_thumbnail() ) {
 		return;
@@ -216,6 +216,15 @@ function travelify_social_image_meta() {
 
 	$image = wp_get_attachment_image_src( $thumb_id, 'full' );
 	[ , $width, $height ] = $image ?: [ null, 0, 0 ];
+
+	// og:image için de JPEG URL kullan (başka plugin AVIF koyuyorsa override et)
+	global $post;
+	$cm_url = $post ? get_post_meta( $post->ID, '_cm_social_image_url', true ) : '';
+	if ( $cm_url ) {
+		printf( '<meta property="og:image" content="%s" />' . "\n", esc_url( $cm_url ) );
+		if ( $width )  printf( '<meta property="og:image:width" content="%d" />' . "\n", (int) $width );
+		if ( $height ) printf( '<meta property="og:image:height" content="%d" />' . "\n", (int) $height );
+	}
 
 	printf( '<meta name="twitter:image" content="%s" />' . "\n", esc_url( $url ) );
 	if ( $width )  printf( '<meta name="twitter:image:width" content="%d" />' . "\n", (int) $width );
