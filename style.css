@@ -729,6 +729,11 @@ a.more-link:focus {
 	padding-left: .6666667em;
 	padding-right: .6666667em;
 }
+/* X ikonunun kendisi zaten "X" harfi — etiket metni görünürse çift X çıkıyor */
+.wp-block-social-links .wp-social-link-twitter .wp-block-social-link-label,
+.wp-block-social-links .wp-social-link-x .wp-block-social-link-label {
+	display: none;
+}
 
 /* Header Image */
 .header-image {
