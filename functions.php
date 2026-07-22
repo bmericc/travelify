@@ -159,7 +159,7 @@ endif; // travelify_setup
  * wp_get_original_image_url() yüklenen orijinal dosyayı döner (format dönüşümü öncesi).
  */
 function travelify_social_image_url( int $attachment_id ): ?string {
-	// Önce content-manager'ın yüklediği orijinal JPEG/PNG'yi dene
+	// content-manager'ın sosyal medya için yüklediği küçük JPEG
 	global $post;
 	if ( $post ) {
 		$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
@@ -184,6 +184,12 @@ add_filter( 'wpseo_opengraph_image_url', function( $url ) {
 		$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
 		if ( $cm_url ) {
 			return $cm_url;
+		}
+	}
+	if ( preg_match( '/\.avif$/i', $url ) ) {
+		$id = attachment_url_to_postid( $url );
+		if ( $id ) {
+			$url = travelify_social_image_url( $id ) ?? $url;
 		}
 	}
 	return $url;
