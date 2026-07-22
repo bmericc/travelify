@@ -177,15 +177,15 @@ function travelify_social_image_url( int $attachment_id ): ?string {
 	return $src ? $src[0] : null;
 }
 
-// Yoast og:image override
-add_filter( 'wpseo_opengraph_image_url', function( $url ) {
+// Yoast og:image override — doğru filter adı: wpseo_opengraph_image
+add_filter( 'wpseo_opengraph_image', function( $url ) {
 	global $post;
 	if ( $post ) {
 		$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
 		if ( $cm_url ) return $cm_url;
 	}
 	return $url;
-} );
+}, 20 );
 
 // Jetpack og:image override — _cm_social_image_url varsa JPEG kullan
 add_filter( 'jetpack_open_graph_tags', function( $tags ) {
