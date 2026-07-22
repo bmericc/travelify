@@ -265,4 +265,29 @@ add_action( 'init', function () {
 	remove_action( 'admin_print_styles', 'print_emoji_styles' );
 } );
 
+// Sosyal medya blok ikonları düzeltmesi — WP core inline style'ı (line-height:0) geç priority ile override eder
+add_action( 'wp_head', function () {
+	echo '<style>
+.wp-block-social-links .wp-social-link a {
+    line-height: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: .25em !important;
+    gap: .4em;
+}
+.wp-block-social-links .wp-social-link a svg {
+    width: 1.5em !important;
+    height: 1.5em !important;
+    flex-shrink: 0;
+    display: block !important;
+}
+.wp-block-social-links .wp-social-link-twitter .wp-block-social-link-label,
+.wp-block-social-links .wp-social-link-x .wp-block-social-link-label {
+    display: none !important;
+}
+</style>' . "\n";
+}, 9999 );
+
 ?>
