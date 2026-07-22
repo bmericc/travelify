@@ -2,7 +2,7 @@
 # Travelify tema deploy — estonya, avustralya ve italya sitelerine pull
 set -e
 
-SITES=("estonya" "avustralya" "italya")
+SITES=("estonya" "avustralya" "italya" "yunanistan")
 
 for site in "${SITES[@]}"; do
     DIR="/root/wordpress/sites/${site}/wp-content/themes/travelify"
