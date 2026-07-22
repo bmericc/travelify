@@ -177,23 +177,27 @@ function travelify_social_image_url( int $attachment_id ): ?string {
 	return $src ? $src[0] : null;
 }
 
-// Yoast'un og:image URL'ini AVIF'ten koru — önce _cm_social_image_url dene
+// Yoast og:image override
 add_filter( 'wpseo_opengraph_image_url', function( $url ) {
 	global $post;
 	if ( $post ) {
 		$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
-		if ( $cm_url ) {
-			return $cm_url;
-		}
-	}
-	if ( preg_match( '/\.avif$/i', $url ) ) {
-		$id = attachment_url_to_postid( $url );
-		if ( $id ) {
-			$url = travelify_social_image_url( $id ) ?? $url;
-		}
+		if ( $cm_url ) return $cm_url;
 	}
 	return $url;
 } );
+
+// Jetpack og:image override — _cm_social_image_url varsa JPEG kullan
+add_filter( 'jetpack_open_graph_tags', function( $tags ) {
+	global $post;
+	if ( ! $post ) return $tags;
+	$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
+	if ( ! $cm_url ) return $tags;
+	$tags['og:image']            = $cm_url;
+	$tags['og:image:secure_url'] = $cm_url;
+	unset( $tags['og:image:type'] );
+	return $tags;
+}, 20 );
 
 /**
  * Twitter Card görsel etiketi — AVIF yerine orijinal JPEG/PNG kullanır.
