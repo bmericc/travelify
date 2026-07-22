@@ -706,15 +706,18 @@ a.more-link:focus {
 .wp-block-social-links .wp-social-link a:focus {
 	font-family: inherit;
 	font-size: inherit;
-	line-height: 0;
+	line-height: 1;
 	padding: .25em;
 	border-radius: 9999px;
 	color: currentColor;
 	display: flex;
 	align-items: center;
+	gap: .4em;
 	text-decoration: none;
 	vertical-align: unset;
 	text-align: unset;
+	width: auto;
+	height: auto;
 }
 .wp-block-social-links .wp-social-link a::before {
 	content: none;
@@ -724,6 +727,11 @@ a.more-link:focus {
 	color: currentColor !important;
 	background: none;
 	opacity: .85;
+}
+.wp-block-social-links .wp-social-link a svg {
+	width: 1em;
+	height: 1em;
+	flex-shrink: 0;
 }
 .wp-block-social-links.is-style-pill-shape .wp-social-link a {
 	padding-left: .6666667em;
