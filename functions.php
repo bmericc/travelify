@@ -159,34 +159,31 @@ endif; // travelify_setup
  * wp_get_original_image_url() yüklenen orijinal dosyayı döner (format dönüşümü öncesi).
  */
 function travelify_social_image_url( int $attachment_id ): ?string {
+	// Önce content-manager'ın yüklediği orijinal JPEG/PNG'yi dene
+	global $post;
+	if ( $post ) {
+		$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
+		if ( $cm_url ) {
+			return $cm_url;
+		}
+	}
+
 	$orig = wp_get_original_image_url( $attachment_id );
 	if ( $orig && ! preg_match( '/\.avif$/i', $orig ) ) {
 		return $orig;
 	}
 
-	// Orijinal de AVIF ise (nadir) — metadata'dan JPEG/PNG boyutuna düş
-	$meta = wp_get_attachment_metadata( $attachment_id );
-	if ( ! empty( $meta['sizes'] ) ) {
-		$upload_dir = wp_upload_dir();
-		$base       = trailingslashit( $upload_dir['baseurl'] ) . dirname( $meta['file'] ?? '' ) . '/';
-		foreach ( $meta['sizes'] as $size ) {
-			if ( isset( $size['file'] ) && ! preg_match( '/\.avif$/i', $size['file'] ) ) {
-				return $base . $size['file'];
-			}
-		}
-	}
-
-	// Son çare: mevcut URL'i dön (AVIF olsa bile)
 	$src = wp_get_attachment_image_src( $attachment_id, 'full' );
 	return $src ? $src[0] : null;
 }
 
-// Yoast'un og:image URL'ini AVIF'ten koru
+// Yoast'un og:image URL'ini AVIF'ten koru — önce _cm_social_image_url dene
 add_filter( 'wpseo_opengraph_image_url', function( $url ) {
-	if ( preg_match( '/\.avif$/i', $url ) ) {
-		$id = attachment_url_to_postid( $url );
-		if ( $id ) {
-			$url = travelify_social_image_url( $id ) ?? $url;
+	global $post;
+	if ( $post ) {
+		$cm_url = get_post_meta( $post->ID, '_cm_social_image_url', true );
+		if ( $cm_url ) {
+			return $cm_url;
 		}
 	}
 	return $url;
