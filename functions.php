@@ -284,6 +284,7 @@ add_action( 'wp_head', function () {
 }
 .wp-block-social-links .wp-social-link {
     list-style: none !important;
+    background-image: none !important;
 }
 .wp-block-social-links .wp-social-link a {
     font-size: large !important;
