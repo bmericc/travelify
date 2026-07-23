@@ -278,6 +278,10 @@ add_action( 'wp_head', function () {
     margin: 0 !important;
     gap: .4em;
 }
+.wp-block-social-links .wp-social-link::before,
+.wp-block-social-links .wp-social-link::after {
+    content: none !important;
+}
 .wp-block-social-links .wp-social-link a {
     font-size: large !important;
 }
