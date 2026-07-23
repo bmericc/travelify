@@ -275,6 +275,7 @@ add_action( 'wp_head', function () {
     display: flex !important;
     align-items: center !important;
     padding: .25em !important;
+    margin: 0 !important;
     gap: .4em;
 }
 .wp-block-social-links .wp-social-link a svg {
