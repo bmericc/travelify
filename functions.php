@@ -278,6 +278,9 @@ add_action( 'wp_head', function () {
     margin: 0 !important;
     gap: .4em;
 }
+.wp-block-social-links .wp-social-link a {
+    font-size: x-large !important;
+}
 .wp-block-social-links .wp-social-link a svg {
     width: 1.5em !important;
     height: 1.5em !important;
