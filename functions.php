@@ -287,7 +287,8 @@ add_action( 'wp_head', function () {
     flex-shrink: 0;
     display: block !important;
 }
-.wp-block-social-links .wp-block-social-link-label {
+.wp-block-social-links .wp-social-link-twitter .wp-block-social-link-label,
+.wp-block-social-links .wp-social-link-x .wp-block-social-link-label {
     display: none !important;
 }
 </style>' . "\n";
