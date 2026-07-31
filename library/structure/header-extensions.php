@@ -65,6 +65,9 @@ function travelify_headerdetails() {
 			$options[ 'social_flickr' ],
 			$options[ 'social_tumblr' ],
 			$options[ 'social_instagram' ],
+			$options[ 'social_tiktok' ],
+			$options[ 'social_bluesky' ],
+			$options[ 'social_mastodon' ],
 			$options[ 'social_rss' ],
 			$options[ 'social_github' ]
 		);
@@ -212,6 +215,9 @@ function travelify_socialnetworks( $flag ) {
 					'Flickr'      => 'social_flickr',
 					'Tumblr'      => 'social_tumblr',
 					'Instagram'   => 'social_instagram',
+					'TikTok'      => 'social_tiktok',
+					'Bluesky'     => 'social_bluesky',
+					'Mastodon'    => 'social_mastodon',
 					'RSS'         => 'social_rss',
 					'GitHub'      => 'social_github'
 				);
