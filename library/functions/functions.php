@@ -18,13 +18,15 @@ function travelify_scripts_styles_method() {
 	global $travelify_theme_options_settings;
 	$options = $travelify_theme_options_settings;
 
+	$theme_ver = wp_get_theme()->get( 'Version' );
+
    /**
 	 * Loads our main stylesheet.
 	 */
-	wp_enqueue_style( 'travelify_style', get_stylesheet_uri() );
+	wp_enqueue_style( 'travelify_style', get_stylesheet_uri(), array(), $theme_ver );
 
 	if( is_rtl() ) {
-		wp_enqueue_style( 'travelify-rtl-style', get_template_directory_uri() . '/rtl.css', false );
+		wp_enqueue_style( 'travelify-rtl-style', get_template_directory_uri() . '/rtl.css', false, $theme_ver );
 	}
 
 	/**
@@ -48,14 +50,10 @@ function travelify_scripts_styles_method() {
 	 * Enqueue Fancy Box setup js and css file.
 	 */
 	if( ( is_home() || is_front_page() ) && "0" == $options[ 'disable_slider' ] ) {
-		// filemtime tabanlı sürüm: dosya her değiştiğinde URL'de ?ver= değeri değişir,
-		// böylece Cloudflare/tarayıcı edge cache'i (max-age çok uzun) her deploy'da otomatik bypass edilir.
-		$travelify_slider_js_path = get_template_directory() . '/library/js/slider-settings.min.js';
-		$travelify_slider_js_ver  = file_exists( $travelify_slider_js_path ) ? filemtime( $travelify_slider_js_path ) : '2.9999.5';
-		wp_enqueue_script( 'travelify_slider', get_template_directory_uri() . '/library/js/slider-settings.min.js', array( 'jquery_cycle' ), $travelify_slider_js_ver, true );
+		wp_enqueue_script( 'travelify_slider', get_template_directory_uri() . '/library/js/slider-settings.min.js', array( 'jquery_cycle' ), $theme_ver, true );
 	}
 
-	wp_enqueue_script( 'travelify_functions', get_template_directory_uri() . '/library/js/functions.min.js', array( 'jquery' ) );
+	wp_enqueue_script( 'travelify_functions', get_template_directory_uri() . '/library/js/functions.min.js', array( 'jquery' ), $theme_ver );
 
 	wp_enqueue_style( 'travelify_google_font_ubuntu' );
 
