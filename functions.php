@@ -221,14 +221,13 @@ function travelify_social_image_meta() {
 	$image = wp_get_attachment_image_src( $thumb_id, 'full' );
 	[ , $width, $height ] = $image ?: [ null, 0, 0 ];
 
-	// og:image için de JPEG URL kullan (başka plugin AVIF koyuyorsa override et)
+	// og:image — önce _cm_social_image_url, yoksa featured image URL'ini kullan
 	global $post;
-	$cm_url = $post ? get_post_meta( $post->ID, '_cm_social_image_url', true ) : '';
-	if ( $cm_url ) {
-		printf( '<meta property="og:image" content="%s" />' . "\n", esc_url( $cm_url ) );
-		if ( $width )  printf( '<meta property="og:image:width" content="%d" />' . "\n", (int) $width );
-		if ( $height ) printf( '<meta property="og:image:height" content="%d" />' . "\n", (int) $height );
-	}
+	$cm_url  = $post ? get_post_meta( $post->ID, '_cm_social_image_url', true ) : '';
+	$og_url  = $cm_url ?: $url;
+	printf( '<meta property="og:image" content="%s" />' . "\n", esc_url( $og_url ) );
+	if ( $width )  printf( '<meta property="og:image:width" content="%d" />' . "\n", (int) $width );
+	if ( $height ) printf( '<meta property="og:image:height" content="%d" />' . "\n", (int) $height );
 
 	printf( '<meta name="twitter:image" content="%s" />' . "\n", esc_url( $url ) );
 	if ( $width )  printf( '<meta name="twitter:image:width" content="%d" />' . "\n", (int) $width );
