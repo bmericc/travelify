@@ -64,6 +64,33 @@ Unless otherwise specified, all the theme files, scripts and images are licensed
 
 ## Change Log
 
+**= 3.1.3 =**
+* Öne çıkan yazı slider'ı düzeltildi: modern jQuery'nin kaldırdığı `.load()` event kısayolu yüzünden jQuery Cycle hiç başlamıyordu; slaytlar arası geçiş, önceki/sonraki okları ve mobildeki kare (1:1) görünüm artık çalışıyor
+
+**= 3.1.2 =**
+* Tüm sosyal medya ikonları SVG mask-image yöntemine taşındı; TikTok, Bluesky ve Mastodon ikonları eklendi
+* CSS/JS enqueue'larına tema sürüm parametresi eklendi (tarayıcı önbelleği güncellemelerde doğru şekilde kırılır)
+* og:image etiketi için öne çıkan görsel fallback'i eklendi (_cm_social_image_url meta'sı olmayan yazılarda da görsel çıkar)
+
+**= 3.1.1 =**
+* Öne çıkan yazı slider'ı mobilde kare (1:1) oranında kırpılarak gösteriliyor
+* Google Fonts istekleri için cross-origin uyarısı giderildi
+
+**= 3.1.0 =**
+* WordPress 7.0.1 ve PHP 8.4 desteği belirtildi
+* Öne çıkan yazı slider'ına önceki/sonraki geçiş okları eklendi; otomatik modda son yazıları kaynak olarak kullanma seçeneği eklendi
+* Slider yalnızca öne çıkarılan görseli olan yazıları (en fazla 5) getiriyor ve bunları eskiden yeniye sıralıyor
+* Slider görselleri artık kayıtsız 'slider' boyutu yerine temaya özel 'travelify-slider' (1018×460) boyutunu kullanıyor
+* Tek yazı sayfalarına öne çıkan görsel eklendi (listelemede 2:1, detayda 1:1 oran)
+* Custom Logo desteği eklendi (Appearance > Customize > Site Identity)
+* Eksik og:image / twitter:image etiketleri eklendi; mükerrer H1 ve mükerrer og:image sorunları giderildi; og:logo meta etiketi eklendi
+* Sosyal medya paylaşım görselleri için AVIF yerine orijinal JPEG/PNG kullanımı sağlandı (X/LinkedIn bot uyumluluğu); Yoast ve Jetpack'in og:image override'ları düzeltildi
+* Sosyal medya ikon/link stillerinde çok sayıda küçük düzeltme (boyut, hizalama, madde imi/ok ikonlarının gizlenmesi, X etiket düzeltmesi)
+* wp-block-social-links tema stil çakışmaları giderildi
+* Artık kullanılmayan wp-emoji-release.min.js script/style'ı kaldırıldı (404 hatası önlendi)
+* JS dosyalarına defer stratejisi ve Google Fonts'a async yükleme eklendi (render-blocking süresi ~1580ms azaldı)
+* Arkaplan görseli WebP formatına çevrildi (41KB → 4.4KB, %89 tasarruf)
+
 **= 3.0.9 =**
 * Improved browser compatibility detection
 * Removed outdated Internet Explorer detection code

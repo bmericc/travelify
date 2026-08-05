@@ -4,13 +4,40 @@ Theme URI: http://colorlib.com/wp/travelify/
 Author: Colorlib
 Author URI: http://colorlib.com/wp/
 Description: Travelify is a clan, simple and fully responsive WordPress WooCommerce theme that looks awesome on any device. It adjusts automatically to any screen size including tablets and smartphones as well as Retina displays. Theme is built using HTML5 / CSS3 and is SEO friendly. This WordPress theme was built with travel, adventures, languages and nature in mind but it can be used for anything so be creative and unleash its full potential in blogging, eCommerce, business and other websites. Along the awesome design this theme is customizable via a simple but yet powerful theme options. Some of the nicest features are featured post slider, social icons, custom logo, translation ready (compatible with WPML plugin) and many more. This theme out-of-the-box plays nicely with WooCommerce, Breadcrumb NavXT, WP-PageNavi, Contact Form 7 and other popular plugins. Theme available in English, French, German, Hungarian, Italian, Spanish, Dutch, Hebrew, Slovak, Turkish, Swedish, Brazilian Portuguese, Polish, Finnish, Bulgarian, Persian (Farsi), Greek, Russian and Chinese.
-Version: 3.0.9
+Version: 3.1.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: white, light, green, custom-background, custom-header, custom-menu, fluid-layout, featured-images, full-width-template, left sidebar, right sidebar, one-column, two columns, three-columns, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
 Text Domain: travelify
 
 == Changelog ==
+
+= 3.1.3 =
+* Öne çıkan yazı slider'ı düzeltildi: modern jQuery'nin kaldırdığı `.load()` event kısayolu yüzünden jQuery Cycle hiç başlamıyordu; slaytlar arası geçiş, önceki/sonraki okları ve mobildeki kare (1:1) görünüm artık çalışıyor
+
+= 3.1.2 =
+* Tüm sosyal medya ikonları SVG mask-image yöntemine taşındı; TikTok, Bluesky ve Mastodon ikonları eklendi
+* CSS/JS enqueue'larına tema sürüm parametresi eklendi (tarayıcı önbelleği güncellemelerde doğru şekilde kırılır)
+* og:image etiketi için öne çıkan görsel fallback'i eklendi (_cm_social_image_url meta'sı olmayan yazılarda da görsel çıkar)
+
+= 3.1.1 =
+* Öne çıkan yazı slider'ı mobilde kare (1:1) oranında kırpılarak gösteriliyor
+* Google Fonts istekleri için cross-origin uyarısı giderildi
+
+= 3.1.0 =
+* WordPress 7.0.1 ve PHP 8.4 desteği belirtildi
+* Öne çıkan yazı slider'ına önceki/sonraki geçiş okları eklendi; otomatik modda son yazıları kaynak olarak kullanma seçeneği eklendi
+* Slider yalnızca öne çıkarılan görseli olan yazıları (en fazla 5) getiriyor ve bunları eskiden yeniye sıralıyor
+* Slider görselleri artık kayıtsız 'slider' boyutu yerine temaya özel 'travelify-slider' (1018×460) boyutunu kullanıyor
+* Tek yazı sayfalarına öne çıkan görsel eklendi (listelemede 2:1, detayda 1:1 oran)
+* Custom Logo desteği eklendi (Appearance > Customize > Site Identity)
+* Eksik og:image / twitter:image etiketleri eklendi; mükerrer H1 ve mükerrer og:image sorunları giderildi; og:logo meta etiketi eklendi
+* Sosyal medya paylaşım görselleri için AVIF yerine orijinal JPEG/PNG kullanımı sağlandı (X/LinkedIn bot uyumluluğu); Yoast ve Jetpack'in og:image override'ları düzeltildi
+* Sosyal medya ikon/link stillerinde çok sayıda küçük düzeltme (boyut, hizalama, madde imi/ok ikonlarının gizlenmesi, X etiket düzeltmesi)
+* wp-block-social-links tema stil çakışmaları giderildi
+* Artık kullanılmayan wp-emoji-release.min.js script/style'ı kaldırıldı (404 hatası önlendi)
+* JS dosyalarına defer stratejisi ve Google Fonts'a async yükleme eklendi (render-blocking süresi ~1580ms azaldı)
+* Arkaplan görseli WebP formatına çevrildi (41KB → 4.4KB, %89 tasarruf)
 
 = 3.0.9 =
 * Improved browser compatibility detection
