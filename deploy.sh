@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Travelify tema deploy — estonya, avustralya, italya ve yunanistan sitelerine pull
-# ardından her sitenin docker container'ında kendi cache eklentisi flush edilir.
-# yunanistan hariç tüm siteler W3 Total Cache, yunanistan ise WP Fastest Cache kullanıyor.
+# ardından her sitenin docker container'ında WP Fastest Cache flush edilir.
 set -e
 
 SITES=("estonya" "avustralya" "italya" "yunanistan")
@@ -15,16 +14,8 @@ for site in "${SITES[@]}"; do
     ssh bmericc@192.168.0.82 "sudo git -C ${DIR} pull origin main"
     echo "  ✓ Tema güncellendi"
 
-    if [ "${site}" = "yunanistan" ]; then
-        CACHE_LABEL="WP Fastest Cache"
-        WP_CACHE_ARGS="eval 'wpfc_clear_all_cache();' --allow-root"
-    else
-        CACHE_LABEL="W3 Total Cache"
-        WP_CACHE_ARGS="w3-total-cache flush all --allow-root"
-    fi
-
-    echo "  ▶ ${site} ${CACHE_LABEL} temizleniyor (${CONTAINER})..."
-    if ssh bmericc@192.168.0.82 "sudo docker exec ${CONTAINER} wp --path=${WP_PATH} ${WP_CACHE_ARGS}"; then
+    echo "  ▶ ${site} WP Fastest Cache temizleniyor (${CONTAINER})..."
+    if ssh bmericc@192.168.0.82 "sudo docker exec ${CONTAINER} wp --path=${WP_PATH} eval 'wpfc_clear_all_cache();' --allow-root"; then
         echo "  ✓ Cache temizlendi"
     else
         echo "  ⚠ Cache temizlenemedi (${site}) — container adını/wp-cli kurulumunu kontrol et"
