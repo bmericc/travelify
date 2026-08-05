@@ -1,7 +1,7 @@
 /**
  * Slider Setting
  */
-jQuery(window).load(function(){
+jQuery(window).on('load', function(){
 	var transition_effect=travelify_slider_value.transition_effect;
 	var transition_delay=travelify_slider_value.transition_delay;
 	var transition_duration=travelify_slider_value.transition_duration;
@@ -9,6 +9,8 @@ jQuery(window).load(function(){
 		fx:transition_effect,
 		pager:'#controllers',
 		activePagerClass:'active',
+		next:'#slider-next',
+		prev:'#slider-prev',
 		timeout:transition_delay,
 		speed:transition_duration,
 		pause:1,
@@ -20,5 +22,11 @@ jQuery(window).load(function(){
 			jQuery(this).parent().css("height",jQuery(this).height())
 		},
 		cleartypeNoBg:true
+	});
+	// #slider-next/#slider-prev href="#" olduğu için varsayılan tıklama davranışı
+	// sayfayı yukarı kaydırır; jQuery Cycle kendi geçiş mantığını çalıştırdıktan
+	// sonra bunu engelliyoruz.
+	jQuery('#slider-next, #slider-prev').on('click', function(e){
+		e.preventDefault();
 	});
 });
