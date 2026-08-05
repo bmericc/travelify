@@ -14,8 +14,14 @@ for site in "${SITES[@]}"; do
     ssh bmericc@192.168.0.82 "sudo git -C ${DIR} pull origin main"
     echo "  ✓ Tema güncellendi"
 
+    # wp-cli'nin CLI ortamında HTTP_HOST tanımsız olduğu için WPFC'nin Cloudflare
+    # CDN adımı (cloudflare_get_zone_id -> idn_to_utf8('')) PHP 8'de fatal hata
+    # veriyor. Local disk cache zaten bu adımdan ÖNCE temizlendiği için hatayı
+    # try/catch ile yutup deploy'un devam etmesini sağlıyoruz.
+    CACHE_EVAL='try { wpfc_clear_all_cache(); } catch (\Throwable $e) { fwrite(STDERR, "wpfc cache clear notice: " . $e->getMessage() . PHP_EOL); }'
+
     echo "  ▶ ${site} WP Fastest Cache temizleniyor (${CONTAINER})..."
-    if ssh bmericc@192.168.0.82 "sudo docker exec ${CONTAINER} wp --path=${WP_PATH} eval 'wpfc_clear_all_cache();' --allow-root"; then
+    if ssh bmericc@192.168.0.82 "sudo docker exec ${CONTAINER} wp --path=${WP_PATH} eval '${CACHE_EVAL}' --allow-root"; then
         echo "  ✓ Cache temizlendi"
     else
         echo "  ⚠ Cache temizlenemedi (${site}) — container adını/wp-cli kurulumunu kontrol et"
