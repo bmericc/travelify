@@ -478,6 +478,7 @@ function travelify_options_register_theme_customizer($wp_customize)
             'social_tiktok'     => esc_html__( 'TikTok', 'travelify'),
             'social_bluesky'    => esc_html__( 'Bluesky', 'travelify'),
             'social_mastodon'   => esc_html__( 'Mastodon', 'travelify'),
+            'social_threads'    => esc_html__( 'Threads', 'travelify'),
             'social_rss'        => esc_html__( 'RSS', 'travelify'),
             'social_github'     => esc_html__( 'GitHub', 'travelify'),
         );

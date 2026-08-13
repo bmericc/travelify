@@ -68,6 +68,7 @@ function travelify_headerdetails() {
 			$options[ 'social_tiktok' ],
 			$options[ 'social_bluesky' ],
 			$options[ 'social_mastodon' ],
+			$options[ 'social_threads' ],
 			$options[ 'social_rss' ],
 			$options[ 'social_github' ]
 		);
@@ -218,6 +219,7 @@ function travelify_socialnetworks( $flag ) {
 					'TikTok'      => 'social_tiktok',
 					'Bluesky'     => 'social_bluesky',
 					'Mastodon'    => 'social_mastodon',
+					'Threads'     => 'social_threads',
 					'RSS'         => 'social_rss',
 					'GitHub'      => 'social_github'
 				);
