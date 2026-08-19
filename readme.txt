@@ -4,13 +4,20 @@ Theme URI: http://colorlib.com/wp/travelify/
 Author: Colorlib
 Author URI: http://colorlib.com/wp/
 Description: Travelify is a clan, simple and fully responsive WordPress WooCommerce theme that looks awesome on any device. It adjusts automatically to any screen size including tablets and smartphones as well as Retina displays. Theme is built using HTML5 / CSS3 and is SEO friendly. This WordPress theme was built with travel, adventures, languages and nature in mind but it can be used for anything so be creative and unleash its full potential in blogging, eCommerce, business and other websites. Along the awesome design this theme is customizable via a simple but yet powerful theme options. Some of the nicest features are featured post slider, social icons, custom logo, translation ready (compatible with WPML plugin) and many more. This theme out-of-the-box plays nicely with WooCommerce, Breadcrumb NavXT, WP-PageNavi, Contact Form 7 and other popular plugins. Theme available in English, French, German, Hungarian, Italian, Spanish, Dutch, Hebrew, Slovak, Turkish, Swedish, Brazilian Portuguese, Polish, Finnish, Bulgarian, Persian (Farsi), Greek, Russian and Chinese.
-Version: 3.1.3
+Version: 3.1.5
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: white, light, green, custom-background, custom-header, custom-menu, fluid-layout, featured-images, full-width-template, left sidebar, right sidebar, one-column, two columns, three-columns, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
 Text Domain: travelify
 
 == Changelog ==
+
+= 3.1.5 =
+* Fix: Theme Check bulguları giderildi — screenshot.png 1.1MB'tan 335KB'a düşürüldü, style.css `Tested up to` 7.0.1'den 7.0'a (major sürüm) düzeltildi, deploy.sh dağıtım paketinden hariç tutuldu (.distignore)
+
+= 3.1.4 =
+* Feat: Threads sosyal medya bağlantısı eklendi
+* Fix: Bluesky ve Threads sosyal ikonları görünmüyordu (WPFC minifier bug)
 
 = 3.1.3 =
 * Öne çıkan yazı slider'ı düzeltildi: modern jQuery'nin kaldırdığı `.load()` event kısayolu yüzünden jQuery Cycle hiç başlamıyordu; slaytlar arası geçiş, önceki/sonraki okları ve mobildeki kare (1:1) görünüm artık çalışıyor
