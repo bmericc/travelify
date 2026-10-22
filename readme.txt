@@ -12,6 +12,9 @@ Text Domain: travelify
 
 == Changelog ==
 
+= 3.1.8 =
+* Fix: TikTok, Bluesky, Mastodon ve Threads için tema seçeneği varsayılanları eklendi — kaydedilmemiş ağ (ör. Mastodon) her istekte "Undefined array key" uyarısı veriyordu
+
 = 3.1.7 =
 * Security (upstream 3.2.0'dan): layout meta kutusu yalnızca tanımlı layout'ları kaydediyor; FeedBurner yönlendirmesi esc_url_raw() + wp_redirect() kullanıyor; Customizer renkleri basılırken sanitize_hex_color() ile tekrar doğrulanıyor
 * Fix: slider gecikme/süre alanı boşken PHP 8'de ana sayfa fatal veriyordu
