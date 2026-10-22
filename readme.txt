@@ -12,6 +12,9 @@ Text Domain: travelify
 
 == Changelog ==
 
+= 3.1.6 =
+* Fix: style.css'e `Update URI: false` eklendi — WordPress.org'daki orijinal Travelify güncellemesi bu fork'u ezmesin (yunanistan ve estonya 3.2.0 otomatik güncellemesiyle özelleştirmeleri kaybetmişti)
+
 = 3.1.5 =
 * Fix: Theme Check bulguları giderildi — screenshot.png 1.1MB'tan 335KB'a düşürüldü, style.css `Tested up to` 7.0.1'den 7.0'a (major sürüm) düzeltildi, deploy.sh dağıtım paketinden hariç tutuldu (.distignore)
 
