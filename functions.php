@@ -53,6 +53,9 @@ if ( ! function_exists( 'travelify_setup' ) ):
 		/** Load WP Customizer */
 		require( get_template_directory() . '/library/functions/customizer.php' );
 
+		/** Block editor: theme.json palette and editor sizing */
+		require( get_template_directory() . '/library/functions/block-editor.php' );
+
 		/** Load Structure */
 		require( get_template_directory() . '/library/structure/header-extensions.php' );
 		require( get_template_directory() . '/library/structure/sidebar-extensions.php' );
