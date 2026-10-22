@@ -240,16 +240,34 @@ add_action('template_redirect', 'travelify_feed_redirect');
  * Redirect WordPress Feeds To FeedBurner
  */
 function travelify_feed_redirect() {
+	if ( ! is_feed() ) {
+		return;
+	}
+
 	global $travelify_theme_options_settings;
 	$options = $travelify_theme_options_settings;
 
-	if ( !empty( $options['feed_url'] ) ) {
-		$url = 'Location: '.$options['feed_url'];
-		if ( is_feed() && !preg_match('/feedburner|feedvalidator/i', $_SERVER['HTTP_USER_AGENT'])) {
-			header($url);
-			header('HTTP/1.1 302 Temporary Redirect');
-		}
+	if ( empty( $options['feed_url'] ) ) {
+		return;
 	}
+
+	// esc_url_raw() strips CR/LF so a stored value cannot inject extra
+	// response headers, and rejects anything that is not an http(s) URL.
+	$feed_url = esc_url_raw( $options['feed_url'], array( 'http', 'https' ) );
+
+	if ( empty( $feed_url ) ) {
+		return;
+	}
+
+	$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+
+	// Never redirect the services that are fetching the feed on our behalf.
+	if ( preg_match( '/feedburner|feedvalidator/i', $user_agent ) ) {
+		return;
+	}
+
+	wp_redirect( $feed_url, 302 );
+	exit;
 }
 
 /****************************************************************************************/

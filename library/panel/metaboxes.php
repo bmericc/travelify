@@ -116,32 +116,37 @@ add_action('save_post', 'travelify_save_custom_meta');
  * @hooked to save_post hook
  */
 function travelify_save_custom_meta( $post_id ) {
-	global $sidebar_layout, $post;
+	global $sidebar_layout;
 
 	// Verify the nonce before proceeding.
-    if ( !isset( $_POST[ 'custom_meta_box_nonce' ] ) || !wp_verify_nonce( $_POST[ 'custom_meta_box_nonce' ], basename( __FILE__ ) ) )
-      return;
+	if ( ! isset( $_POST['custom_meta_box_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['custom_meta_box_nonce'] ) ), basename( __FILE__ ) ) ) {
+		return;
+	}
 
 	// Stop WP from clearing custom fields on autosave
-    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE)
-      return;
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
 
-	if ('page' == $_POST['post_type']) {
-      if (!current_user_can( 'edit_page', $post_id ) )
-         return $post_id;
-   }
-   elseif (!current_user_can( 'edit_post', $post_id ) ) {
-      return $post_id;
-   }
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
 
-	foreach ($sidebar_layout as $field) {
-		//Execute this saving function
-		$old = get_post_meta( $post_id, $field['id'], true);
-		$new = $_POST[$field['id']];
-		if ($new && $new != $old) {
-			update_post_meta($post_id, $field['id'], $new);
-		} elseif ('' == $new && $old) {
-			delete_post_meta($post_id, $field['id'], $old);
-		}
-	} // end foreach
+	if ( ! isset( $_POST['travelify_sidebarlayout'] ) ) {
+		return;
+	}
+
+	$submitted = sanitize_key( wp_unslash( $_POST['travelify_sidebarlayout'] ) );
+
+	// Only ever store a layout the theme actually offers.
+	if ( ! in_array( $submitted, wp_list_pluck( $sidebar_layout, 'value' ), true ) ) {
+		return;
+	}
+
+	if ( 'default' === $submitted ) {
+		delete_post_meta( $post_id, 'travelify_sidebarlayout' );
+		return;
+	}
+
+	update_post_meta( $post_id, 'travelify_sidebarlayout', $submitted );
 }

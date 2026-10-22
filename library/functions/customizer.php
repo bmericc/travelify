@@ -672,17 +672,26 @@ function travelify_sanitize_slider( $values ) {
 }
 
 /**
+ * Read a colour theme mod and re-validate it at output time, so a value saved
+ * by an older version of the theme cannot break out of the style block.
+ */
+function travelify_color_mod( $name, $default = '' ) {
+	$color = sanitize_hex_color( get_theme_mod( $name, $default ) );
+	return $color ? $color : $default;
+}
+
+/**
  * Output custom CSS in theme header
  * @package Travelify
  */
 function travelify_customizer_css() {
     ?>
     <style type="text/css">
-        a { color: <?php echo esc_attr( get_theme_mod('travelify_link_color', '#57AD68') ); ?>; }
-        #site-title a { color: <?php echo esc_attr( get_theme_mod('travelify_logo_color') ); ?>; }
-        #site-title a:hover, #site-title a:focus  { color: <?php echo esc_attr( get_theme_mod('travelify_logo_hover_color') ); ?>; }
-        .wrapper { background: <?php echo esc_attr( get_theme_mod('travelify_wrapper_color', '#F8F8F8') ); ?>; }
-        .social-icons ul li a { color: <?php echo esc_attr( get_theme_mod('travelify_social_color', '#d0d0d0') ); ?>; }
+        a { color: <?php echo esc_attr( travelify_color_mod('travelify_link_color', '#57AD68') ); ?>; }
+        #site-title a { color: <?php echo esc_attr( travelify_color_mod('travelify_logo_color') ); ?>; }
+        #site-title a:hover, #site-title a:focus  { color: <?php echo esc_attr( travelify_color_mod('travelify_logo_hover_color') ); ?>; }
+        .wrapper { background: <?php echo esc_attr( travelify_color_mod('travelify_wrapper_color', '#F8F8F8') ); ?>; }
+        .social-icons ul li a { color: <?php echo esc_attr( travelify_color_mod('travelify_social_color', '#d0d0d0') ); ?>; }
 		#main-nav a,
 		#main-nav a:hover,
 		#main-nav a:focus,
@@ -691,9 +700,9 @@ function travelify_customizer_css() {
 		#main-nav ul li.current-menu-ancestor a,
 		#main-nav ul li.current_page_item a,
 		#main-nav ul li:hover > a,
-		#main-nav ul li:focus-within > a { color: <?php echo esc_attr( get_theme_mod('travelify_menu_item_color', '#fff') ); ?>; }
-        .widget, article { background: <?php echo esc_attr( get_theme_mod('travelify_content_bg_color', '#fff') ); ?>; }
-        .entry-title, .entry-title a, .entry-title a:focus, h1, h2, h3, h4, h5, h6, .widget-title  { color: <?php echo esc_attr( get_theme_mod('travelify_header_color', '#1b1e1f') ); ?>; }
+		#main-nav ul li:focus-within > a { color: <?php echo esc_attr( travelify_color_mod('travelify_menu_item_color', '#fff') ); ?>; }
+        .widget, article { background: <?php echo esc_attr( travelify_color_mod('travelify_content_bg_color', '#fff') ); ?>; }
+        .entry-title, .entry-title a, .entry-title a:focus, h1, h2, h3, h4, h5, h6, .widget-title  { color: <?php echo esc_attr( travelify_color_mod('travelify_header_color', '#1b1e1f') ); ?>; }
 		a:focus,
 		a:active,
 		a:hover,
@@ -712,9 +721,9 @@ function travelify_customizer_css() {
 		.entry-meta a:hover,
 		.entry-meta a:focus,
 		#site-generator .copyright a:hover,
-		#site-generator .copyright a:focus { color: <?php echo esc_attr( get_theme_mod('travelify_link_hover_color', '#439f55') ); ?>; }
-        #main-nav { background: <?php echo esc_attr( get_theme_mod('travelify_menu_color', '#57ad68') ); ?>; border-color: <?php echo esc_attr( get_theme_mod('travelify_menu_color', '#57ad68') ); ?>; }
-        #main-nav ul li ul, body { border-color: <?php echo esc_attr( get_theme_mod('travelify_menu_color', '#439f55') ); ?>; }
+		#site-generator .copyright a:focus { color: <?php echo esc_attr( travelify_color_mod('travelify_link_hover_color', '#439f55') ); ?>; }
+        #main-nav { background: <?php echo esc_attr( travelify_color_mod('travelify_menu_color', '#57ad68') ); ?>; border-color: <?php echo esc_attr( travelify_color_mod('travelify_menu_color', '#57ad68') ); ?>; }
+        #main-nav ul li ul, body { border-color: <?php echo esc_attr( travelify_color_mod('travelify_menu_color', '#439f55') ); ?>; }
 		#main-nav a:hover,
 		#main-nav a:focus,
 		#main-nav ul li.current-menu-item a,
@@ -727,14 +736,14 @@ function travelify_customizer_css() {
 		#main-nav li:focus-within > a,
 		#main-nav ul ul :hover > a,
 		#main-nav ul ul :focus-within > a,
-		#main-nav a:focus { background: <?php echo esc_attr( get_theme_mod('travelify_menu_hover_color', '#439f55') ); ?>; }
+		#main-nav a:focus { background: <?php echo esc_attr( travelify_color_mod('travelify_menu_hover_color', '#439f55') ); ?>; }
 		#main-nav ul li ul li a:hover,
 		#main-nav ul li ul li a:focus,
 		#main-nav ul li ul li:hover > a,
 		#main-nav ul li ul li:focus-within > a,
 		#main-nav ul li.current-menu-item ul li a:hover
-		#main-nav ul li.current-menu-item ul li a:focus { color: <?php echo esc_attr( get_theme_mod('travelify_menu_hover_color', '#439f55') ); ?>; }
-        .entry-content { color: <?php echo esc_attr( get_theme_mod('travelify_entry_color', '#1D1D1D') ); ?>; }
+		#main-nav ul li.current-menu-item ul li a:focus { color: <?php echo esc_attr( travelify_color_mod('travelify_menu_hover_color', '#439f55') ); ?>; }
+        .entry-content { color: <?php echo esc_attr( travelify_color_mod('travelify_entry_color', '#1D1D1D') ); ?>; }
 		input[type="reset"],
 		input[type="button"],
 		input[type="submit"],
@@ -747,14 +756,14 @@ function travelify_customizer_css() {
 		.wp-pagenavi .current,
 		.wp-pagenavi a:hover,
 		.wp-pagenavi a:focus {
-            background: <?php echo esc_attr( get_theme_mod('travelify_element_color', '#57ad68') ); ?>;
-            border-color: <?php echo esc_attr( get_theme_mod('travelify_element_color', '#57ad68') ); ?> !important;
+            background: <?php echo esc_attr( travelify_color_mod('travelify_element_color', '#57ad68') ); ?>;
+            border-color: <?php echo esc_attr( travelify_color_mod('travelify_element_color', '#57ad68') ); ?> !important;
         }
 		::selection,
-		.back-to-top:focus-within a { background: <?php echo esc_attr( get_theme_mod('travelify_element_color', '#57ad68') ); ?>; }
-        blockquote { border-color: <?php echo esc_attr( get_theme_mod('travelify_element_color', '#439f55') ); ?>; }
+		.back-to-top:focus-within a { background: <?php echo esc_attr( travelify_color_mod('travelify_element_color', '#57ad68') ); ?>; }
+        blockquote { border-color: <?php echo esc_attr( travelify_color_mod('travelify_element_color', '#439f55') ); ?>; }
 		#controllers a:hover,
-		#controllers a.active { color: <?php echo esc_attr( get_theme_mod('travelify_element_color', ' #439f55') ); ?>; }
+		#controllers a.active { color: <?php echo esc_attr( travelify_color_mod('travelify_element_color', ' #439f55') ); ?>; }
 		input[type="reset"]:hover,
 		input[type="reset"]:focus,
 		input[type="button"]:hover,
@@ -770,8 +779,8 @@ function travelify_customizer_css() {
 		ul.default-wp-page li a:hover,
 		ul.default-wp-page li a:focus,
 		ul.default-wp-page li a:active {
-            background: <?php echo esc_attr( get_theme_mod('travelify_element_hover_color', '#439f55') ); ?>;
-            border-color: <?php echo esc_attr( get_theme_mod('travelify_element_hover_color', '#439f55') ); ?>;
+            background: <?php echo esc_attr( travelify_color_mod('travelify_element_hover_color', '#439f55') ); ?>;
+            border-color: <?php echo esc_attr( travelify_color_mod('travelify_element_hover_color', '#439f55') ); ?>;
         }
     </style>
     <?php
