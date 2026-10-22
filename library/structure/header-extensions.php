@@ -199,8 +199,10 @@ function travelify_socialnetworks( $flag ) {
 	global $travelify_theme_options_settings;
    $options = $travelify_theme_options_settings;
 
+	// Built on every request: the old one-day transient cost a database query
+	// per page view and kept showing removed links until it expired.
 	$travelify_socialnetworks = '';
-	if ( ( !$travelify_socialnetworks = get_transient( 'travelify_socialnetworks' ) ) && ( 1 == $flag ) )  {
+	if ( 1 == $flag ) {
 
 		$travelify_socialnetworks .='
 			<div class="social-icons clearfix">
@@ -234,8 +236,6 @@ function travelify_socialnetworks( $flag ) {
 				$travelify_socialnetworks .='
 			</ul>
 			</div><!-- .social-icons -->';
-
-		set_transient( 'travelify_socialnetworks', $travelify_socialnetworks, 86940 );
 	}
 	echo $travelify_socialnetworks;
 }

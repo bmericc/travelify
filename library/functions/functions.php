@@ -223,22 +223,17 @@ add_action('wp_head', 'travelify_internal_css');
  * Hooks the Custom Internal CSS to head section
  */
 function travelify_internal_css() {
+	global $travelify_theme_options_settings;
+	$options = $travelify_theme_options_settings;
 
-	if ( ( !$travelify_internal_css = get_transient( 'travelify_internal_css' ) ) ) {
-
-		global $travelify_theme_options_settings;
-		$options = $travelify_theme_options_settings;
-
-		if( !empty( $options[ 'custom_css' ] ) ) {
-			$travelify_internal_css = '<!-- '.get_bloginfo('name').' Custom CSS Styles -->' . "\n";
-			$travelify_internal_css .= '<style type="text/css" media="screen">' . "\n";
-			$travelify_internal_css .=  $options['custom_css'] . "\n";
-			$travelify_internal_css .= '</style>' . "\n";
-		}
-
-		set_transient( 'travelify_internal_css', $travelify_internal_css, 86940 );
+	// Built on every request: the old one-day transient cost a database query
+	// per page view and kept serving the CSS after it had been changed.
+	if ( empty( $options['custom_css'] ) ) {
+		return;
 	}
-	echo $travelify_internal_css;
+
+	echo '<!-- ' . esc_html( get_bloginfo( 'name' ) ) . ' Custom CSS Styles -->' . "\n";
+	echo '<style type="text/css" media="screen">' . "\n" . wp_strip_all_tags( $options['custom_css'] ) . "\n" . '</style>' . "\n";
 }
 
 
