@@ -12,6 +12,12 @@ Text Domain: travelify
 
 == Changelog ==
 
+= 3.1.7 =
+* Security (upstream 3.2.0'dan): layout meta kutusu yalnızca tanımlı layout'ları kaydediyor; FeedBurner yönlendirmesi esc_url_raw() + wp_redirect() kullanıyor; Customizer renkleri basılırken sanitize_hex_color() ile tekrar doğrulanıyor
+* Fix: slider gecikme/süre alanı boşken PHP 8'de ana sayfa fatal veriyordu
+* Perf: sosyal ikonlar ve custom CSS için her sayfada çalışan transient sorguları kaldırıldı
+* Feat: theme.json renk paleti (Customizer renklerini izler), editör genişliği yazının kolonuna göre, 4 seyahat block pattern'i
+
 = 3.1.6 =
 * Fix: style.css'e `Update URI: false` eklendi — WordPress.org'daki orijinal Travelify güncellemesi bu fork'u ezmesin (yunanistan ve estonya 3.2.0 otomatik güncellemesiyle özelleştirmeleri kaybetmişti)
 
