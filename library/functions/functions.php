@@ -108,8 +108,17 @@ function travelify_pass_cycle_parameters() {
     $options = $travelify_theme_options_settings;
 
 		$transition_effect   = $options[ 'transition_effect' ];
-		$transition_delay    = $options[ 'transition_delay' ] * 1000;
-		$transition_duration = $options[ 'transition_duration' ] * 1000;
+		// Cast before multiplying: an empty value is a TypeError in PHP 8
+		// arithmetic and took the whole home page down. jQuery Cycle treats a
+		// zero timeout as "never advance", so fall back to the 4s / 1s defaults.
+		$transition_delay    = (float) $options[ 'transition_delay' ] * 1000;
+		$transition_duration = (float) $options[ 'transition_duration' ] * 1000;
+		if ( $transition_delay <= 0 ) {
+			$transition_delay = 4000;
+		}
+		if ( $transition_duration <= 0 ) {
+			$transition_duration = 1000;
+		}
     wp_localize_script(
         'travelify_slider',
         'travelify_slider_value',
